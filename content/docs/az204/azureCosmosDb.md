@@ -1,7 +1,9 @@
 ---
 title: Azure CosmosDB
 type: docs
+weight: 1
 prev: docs/az204/
+next: docs/az204/apiManagement
 ---
 
 ### Overview of Azure Cosmos DB

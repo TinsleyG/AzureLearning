@@ -1,11 +1,11 @@
 ---
-title: AZ-204
+title: Web Essentials
 type: docs
-weight: 2
+weight: 1
 sidebar:
   open: false
 prev: docs/
-next: docs/az204/azureCosmosDb
+next: docs/webEssentials/internetBasics
 ---
 
 This is content for AZ204
