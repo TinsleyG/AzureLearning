@@ -1,7 +1,7 @@
 ---
 title: Azure API Management
 type: docs
-weight: 3
+weight: 4
 prev: docs/az204/azureCosmosDb
 ---
 

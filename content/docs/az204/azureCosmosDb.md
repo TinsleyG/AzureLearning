@@ -1,7 +1,7 @@
 ---
 title: Azure CosmosDB
 type: docs
-weight: 2
+weight: 3
 prev: docs/az204/virtualMachines
 next: docs/az204/apiManagement
 ---
