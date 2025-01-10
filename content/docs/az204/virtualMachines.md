@@ -3,7 +3,7 @@ title: Virtual Machines
 type: docs
 weight: 1
 prev: docs/az204/
-next: docs/az204/azureCosmosDb
+next: docs/az204/implementContainerizedSolutions
 ---
 
 1. **Microsoft Shared Responsibility Model**:
