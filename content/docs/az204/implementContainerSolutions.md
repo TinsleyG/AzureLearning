@@ -147,3 +147,149 @@ Azure Container Apps is a serverless container service powered by Kubernetes, de
 - **Service Connector Integration**: Facilitates easy connection with various Azure services for enhanced application functionality.
 
 This overview illustrates how Azure Container Apps simplifies container management for complex, event-driven, and scalable applications, with integrated support for Azure services and flexible scaling options.
+
+Here’s a structured list of common **Azure CLI commands** for **Azure Container Registry (ACR)**, **Azure Container Instances (ACI)**, and **Azure Container Apps**, along with the key arguments and variable names used in each command:
+
+## Useful Commands
+
+### **Azure Container Registry (ACR)**
+
+1. **Login to ACR**  
+   ```bash
+   az acr login --name <registry-name>
+   ```
+   - `--name`: The name of the container registry.
+
+2. **Create an ACR**  
+   ```bash
+   az acr create --resource-group <resource-group-name> --name <registry-name> --sku <sku>
+   ```
+   - `--resource-group`: The name of the resource group.
+   - `--name`: The name of the ACR.
+   - `--sku`: The SKU tier (e.g., `Basic`, `Standard`, `Premium`).
+
+3. **List ACRs in a Subscription**  
+   ```bash
+   az acr list --resource-group <resource-group-name> --output table
+   ```
+   - `--resource-group`: (Optional) Filter by resource group.
+
+4. **Push an Image to ACR**  
+   ```bash
+   docker tag <local-image> <registry-name>.azurecr.io/<image-name>:<tag>
+   docker push <registry-name>.azurecr.io/<image-name>:<tag>
+   ```
+
+5. **List Images in ACR**  
+   ```bash
+   az acr repository list --name <registry-name> --output table
+   ```
+   - `--name`: The name of the registry.
+
+6. **Delete a Repository**  
+   ```bash
+   az acr repository delete --name <registry-name> --repository <repository-name> --yes
+   ```
+   - `--repository`: The name of the repository to delete.
+
+---
+
+### **Azure Container Instances (ACI)**
+
+1. **Create a Container Instance**  
+   ```bash
+   az container create --resource-group <resource-group-name> --name <container-name> --image <image> --cpu <cpu-cores> --memory <memory-size> --ports <port>
+   ```
+   - `--resource-group`: The name of the resource group.
+   - `--name`: The name of the container instance.
+   - `--image`: The container image to use (e.g., `<registry-name>.azurecr.io/<image>:<tag>`).
+   - `--cpu`: The number of CPU cores.
+   - `--memory`: The size of memory in GB.
+   - `--ports`: Ports to expose.
+
+2. **List Container Instances**  
+   ```bash
+   az container list --resource-group <resource-group-name> --output table
+   ```
+
+3. **Show Details of a Container Instance**  
+   ```bash
+   az container show --resource-group <resource-group-name> --name <container-name>
+   ```
+
+4. **Delete a Container Instance**  
+   ```bash
+   az container delete --resource-group <resource-group-name> --name <container-name> --yes
+   ```
+
+5. **Attach to a Running Container Instance**  
+   ```bash
+   az container attach --resource-group <resource-group-name> --name <container-name>
+   ```
+
+---
+
+### **Azure Container Apps**
+
+1. **Enable the Container Apps Extension**  
+   ```bash
+   az extension add --name containerapp
+   ```
+
+2. **Register the Required Resource Provider**  
+   ```bash
+   az provider register --namespace Microsoft.App
+   ```
+
+3. **Create a Container App Environment**  
+   ```bash
+   az containerapp env create --name <environment-name> --resource-group <resource-group-name> --location <location>
+   ```
+   - `--name`: Name of the environment.
+   - `--resource-group`: The name of the resource group.
+   - `--location`: Azure region.
+
+4. **Create a Container App**  
+   ```bash
+   az containerapp create --name <app-name> --resource-group <resource-group-name> --environment <environment-name> --image <image-path> --target-port <port> --ingress <ingress-type>
+   ```
+   - `--name`: The name of the container app.
+   - `--environment`: The name of the environment.
+   - `--image`: The container image to deploy.
+   - `--target-port`: Port for the app to listen on.
+   - `--ingress`: Set to `internal` or `external`.
+
+5. **Set Scaling Rules**  
+   ```bash
+   az containerapp revision set-scale --name <app-name> --resource-group <resource-group-name> --min-replicas <min> --max-replicas <max>
+   ```
+   - `--min-replicas`: Minimum number of replicas.
+   - `--max-replicas`: Maximum number of replicas.
+
+6. **List All Container Apps**  
+   ```bash
+   az containerapp list --resource-group <resource-group-name> --output table
+   ```
+
+7. **View Logs for a Container App**  
+   ```bash
+   az containerapp logs show --name <app-name> --resource-group <resource-group-name>
+   ```
+
+8. **Delete a Container App**  
+   ```bash
+   az containerapp delete --name <app-name> --resource-group <resource-group-name> --yes
+   ```
+
+---
+
+### **General Variables and Their Purpose**
+- `<resource-group-name>`: Name of the Azure resource group.
+- `<container-name>`: Name of the ACI or Container App.
+- `<environment-name>`: Name of the Azure Container App environment.
+- `<registry-name>`: Name of the Azure Container Registry.
+- `<image-path>`: Path to the container image, including registry and tag.
+- `<port>`: Port number the container listens on.
+- `<min>`/`<max>`: Scaling limits for container replicas.
+
+This list provides a comprehensive overview of commands for managing ACR, ACI, and Azure Container Apps. Let me know if you'd like additional details!
