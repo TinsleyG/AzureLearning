@@ -3,7 +3,7 @@ title: Implement Containerized Solutions
 type: docs
 weight: 2
 prev: docs/az204/virtualMachines
-next: docs/az204/azureCosmosDb
+next: docs/az204/azureAppService
 ---
 
 ## ACR - Azure Container Registry
