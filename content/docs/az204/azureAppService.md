@@ -3,7 +3,7 @@ title: Azure App Service Overview
 type: docs
 weight: 2
 prev: docs/az204/implementContainerServices
-next: docs/az204/azureCosmosDb
+next: docs/az204/azureFunctions
 ---
 
 ##  Azure App Service Overview and Key Concepts
