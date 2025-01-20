@@ -1,7 +1,7 @@
 ---
 title: AZ-204
 type: docs
-weight: 2
+weight: 1
 sidebar:
   open: false
 prev: docs/

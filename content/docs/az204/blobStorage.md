@@ -1,7 +1,7 @@
 ---
 title: Blob Storage
 type: docs
-weight: 2
+weight: 5
 prev: docs/az204/azureFunctions
 next: docs/az204/azureCosmosDb
 ---

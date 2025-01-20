@@ -1,7 +1,7 @@
 ---
 title: Azure Functions
 type: docs
-weight: 2
+weight: 4
 prev: docs/az204/azureAppService
 next: docs/az204/blobStorage
 ---

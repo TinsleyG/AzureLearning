@@ -1,7 +1,7 @@
 ---
 title: Azure App Service Overview
 type: docs
-weight: 2
+weight: 3
 prev: docs/az204/implementContainerServices
 next: docs/az204/azureFunctions
 ---
