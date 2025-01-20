@@ -1,8 +1,9 @@
 ---
 title: Azure API Management
 type: docs
-weight: 4
+weight: 7
 prev: docs/az204/azureCosmosDb
+next: docs/az204/azureSecurity
 ---
 
 Azure API Management (APIM) is a fully managed service that allows organizations to publish, secure, transform, monitor, and analyze APIs. It acts as a gateway between clients and backend services, enabling centralized management of APIs while ensuring high availability, security, and scalability.

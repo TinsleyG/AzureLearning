@@ -1,62 +1,222 @@
 ---
 title: Azure CosmosDB
 type: docs
-weight: 3
-prev: docs/az204/virtualMachines
+weight: 6
+prev: docs/az204/blobStorage
 next: docs/az204/apiManagement
 ---
 
-### Overview of Azure Cosmos DB
-Azure Cosmos DB is a globally distributed, multi-model database service by Microsoft, designed to handle large-scale applications with low-latency and high-availability requirements. It’s known for providing flexible data modeling options, high throughput, and consistency controls, making it suitable for mission-critical workloads.
+### Azure AZ-204 Exam: Overview of Cosmos DB  
 
-### Key Features
-1. **Global Distribution**: Cosmos DB allows you to distribute data globally across Azure regions, automatically replicating your data for fast, low-latency access and higher availability. For the AZ-204 exam, understand how to configure replication and data residency.
+Azure Cosmos DB is a globally distributed, NoSQL database platform designed for low-latency performance, scalability, and high availability. While Cosmos DB has its own dedicated certification (DP-420), the AZ-204 exam expects candidates to have a foundational understanding of its core concepts. Here's a detailed breakdown of what you need to know for the exam:  
 
-2. **Multi-Model Support**: Cosmos DB supports various data models, including:
-   - **Document (NoSQL)**: Used with JSON objects, commonly accessed with the Core (SQL) API.
-   - **Key-Value**: Supported by the Table API, similar to Azure Table Storage.
-   - **Graph**: Used with the Gremlin API, for graph-based data.
-   - **Column-Family**: Supported by the Cassandra API for column-based storage.
-   - **Wide-Column**: Allows for a flexible schema on a per-entity basis.
+---
 
-3. **APIs**: Cosmos DB is accessed via different APIs:
-   - **Core (SQL) API**: Most common, for querying JSON data with SQL-like syntax.
-   - **MongoDB API**: Allows MongoDB applications to work with Cosmos DB.
-   - **Cassandra API**: Provides compatibility with Cassandra column-family databases.
-   - **Gremlin API**: Supports graph-based databases.
-   - **Table API**: Mimics Azure Table Storage for key-value data models.
+#### **Core Features of Cosmos DB**  
+1. **Global Distribution**:  
+   - Enables worldwide data distribution, improving disaster recovery and user experience.  
+   - Benefits include redundant backups for resilience and reduced latency for users closer to the data source.  
 
-4. **Partitioning**: Cosmos DB uses a horizontal partitioning model for scalability, distributing data across multiple partitions. Each partition is identified by a “partition key.” Understanding how to select a good partition key is crucial, as it affects scalability and performance.
+2. **Multi-Modal Capabilities**:  
+   - Supports various NoSQL APIs, including JSON, key-value, wide-column, and graph databases.  
+   - Offers flexibility for diverse workloads and use cases.  
 
-5. **Consistency Levels**: Cosmos DB offers five consistency levels, balancing latency and data consistency:
-   - **Strong**: Ensures linearizability, but with higher latency.
-   - **Bounded Staleness**: Guarantees consistency within a defined lag (time or updates).
-   - **Session**: Provides consistency within a session, ensuring repeatable reads.
-   - **Consistent Prefix**: Guarantees no out-of-order reads, slightly faster than strong.
-   - **Eventual**: Offers the lowest latency with eventual consistency across regions.
+3. **Performance Guarantees**:  
+   - Single-digit millisecond response times for reads and writes.  
+   - 99.999% uptime backed by a service-level agreement (SLA), ensuring reliability.  
 
-6. **Request Units (RUs)**: Cosmos DB uses Request Units (RUs) as a measure of throughput, which encompasses reads, writes, and storage operations. You need to provision RUs based on workload needs, with the option of **autoscaling** for dynamic adjustment of RU capacity.
+4. **Scalability**:  
+   - Automatically scales based on demand, supporting high-throughput workloads without manual intervention.  
+   - Multi-master distribution allows seamless failover and consistent write operations across multiple regions.  
 
-7. **Time to Live (TTL)**: TTL is a feature that automatically deletes documents after a specified time, useful for managing transient data.
+---
 
-### Security and Access
-1. **Encryption**: Data is encrypted both at rest and in transit, with Microsoft-managed keys or customer-managed keys through Azure Key Vault.
-2. **Role-Based Access Control (RBAC)**: Cosmos DB integrates with Azure AD to support role-based permissions, and it has built-in roles like Cosmos DB Owner, Reader, and Contributor.
-3. **Private Endpoints**: For secure connectivity to Cosmos DB, you can use Azure Private Link to create private endpoints within a VNet.
+#### **Pricing and Throughput**  
+Cosmos DB pricing is based on **compute** and **storage**, billed hourly.  
+- **Request Units (RUs)**:  
+  - RUs measure throughput by combining CPU, IOPS, and memory.  
+  - Throughput is expressed as RU/s (Request Units per second).  
+  - Common configurations:  
+    1. **Provisioned Manual**: For predictable workloads.  
+    2. **Provisioned Autoscale**: Automatically adjusts throughput for variable workloads.  
+    3. **Serverless**: Ideal for unpredictable or low-volume workloads.  
 
-### Monitoring and Troubleshooting
-1. **Azure Monitor Integration**: Cosmos DB provides integration with Azure Monitor for tracking metrics like latency, throughput, storage, and RU/s usage.
-2. **Diagnostic Logs**: Enable diagnostic logs to monitor detailed activity and diagnose issues within your Cosmos DB instances.
-3. **Alerts**: You can set up alerts based on metrics such as RU/s consumption or latency to stay ahead of potential performance or scaling issues.
+---
 
-### Data Migration and ETL
-Cosmos DB provides tools like **Data Migration Tool** and **Azure Data Factory** for data import/export and migration from other databases. It also supports Spark and Synapse Analytics for analytics on Cosmos DB data.
+#### **Consistency Levels**  
+Cosmos DB offers five consistency levels to balance data accuracy, latency, and performance:  
+1. **Strong Consistency**:  
+   - Guarantees the most recent data across all regions.  
+   - Ideal for applications requiring linear data consistency.  
 
-### Exam Focus Tips
-- **APIs and Data Models**: Be able to distinguish among the different APIs and understand their use cases.
-- **Global Distribution**: Understand how to configure global distribution and replication.
-- **Partitioning and Scaling**: Know the implications of partition keys on scalability and performance.
-- **Consistency Levels**: Be familiar with the five consistency levels and when to use each.
-- **Throughput (RUs)**: Understand RUs, how they are provisioned, and autoscaling.
-- **Security**: Know access control, RBAC, and encryption options.
-- **Monitoring**: Be prepared to configure and interpret metrics in Azure Monitor.
+2. **Bounded Staleness**:  
+   - Ensures ordered data reads within a defined lag (time or version).  
+   - Suitable for globally distributed applications balancing performance and consistency.  
+
+3. **Session Consistency** (default for most apps):  
+   - Guarantees read-your-own-writes within a session.  
+   - Best for scenarios requiring immediate local consistency.  
+
+4. **Consistent Prefix**:  
+   - Ensures reads follow the order of writes without defining a staleness threshold.  
+   - Optimized for performance with minimal latency.  
+
+5. **Eventual Consistency**:  
+   - Provides no guarantees on order or timing but ensures eventual synchronization.  
+   - Ideal for low-latency, high-throughput applications (e.g., social media).  
+
+Consistency can be adjusted at the account level and weakened for specific requests via the SDK.  
+
+---
+
+#### **Free Tier**  
+Azure Cosmos DB offers a limited free tier to test its features, including importing smaller legacy data stores. While the free tier is restricted in capacity, it provides an opportunity to evaluate its potential before committing to higher tiers.  
+
+---
+
+#### **Key Takeaways**  
+- Azure Cosmos DB is a highly scalable, globally distributed NoSQL database.  
+- Key topics include global distribution, throughput measured in RUs, and five consistency levels.  
+- Understanding how to balance cost, consistency, and performance is crucial for enterprise applications.  
+- Familiarity with provisioning throughput and consistency levels will help optimize solutions effectively for the AZ-204 exam.  
+
+Here’s the polished version of your Cosmos DB-focused session:
+
+---
+
+
+**Welcome to the Cosmos DB Data Management Session!**  
+In this segment, we’ll cover essential aspects of Cosmos DB data management to help you grasp its core concepts and prepare for real-world use or certifications.  
+
+### **What We’ll Cover**  
+1. **Cosmos DB APIs and Use Cases**  
+   - Overview of supported APIs and their applications.
+2. **Partition Design**  
+   - Understanding logical and physical partitions and their significance.
+3. **Cosmos DB C# SDK Basics**  
+   - Common conventions and coding patterns.
+4. **Server-Side Objects**  
+   - User-defined functions (UDFs), triggers, and stored procedures in JavaScript.
+5. **The Cosmos DB Change Feed**  
+   - How it works and its practical applications.
+
+---
+
+### **Cosmos DB APIs**  
+Cosmos DB supports multiple data models through APIs:  
+- **NoSQL API (Core API)**: Native to Cosmos DB and ideal for JSON-based data.  
+- **MongoDB API**: Uses BSON documents for MongoDB compatibility.  
+- **Cassandra API**: Designed for wide-column database scenarios.  
+- **Table API**: Simplifies migration from Azure Table Storage.  
+- **Gremlin API**: Handles graph data with nodes and edges.  
+- **PostgreSQL API**: Supports distributed PostgreSQL-based workloads.  
+
+💡 **Tip**: Use the Core API unless you need compatibility with existing systems or open-source ecosystems.
+
+---
+
+### **Partition Design in Cosmos DB**  
+- **Account Level**: Set API, enable global distribution, and define consistency levels.  
+- **Database Level**: Manage security and optional throughput settings.  
+- **Container Level**: Use partition keys to logically group data (e.g., by customer ID, product ID).  
+- **Logical vs. Physical Partitions**: Logical partitions map to physical partitions, which are implemented as replica sets for scalability.  
+
+---
+
+### **Coding in Cosmos DB with C# SDK**  
+The three key classes are:  
+1. **CosmosClient**: Connects to your Cosmos account.  
+2. **Database**: Manages databases and permissions.  
+3. **Container**: Performs CRUD operations on data.  
+
+Examples:  
+- **Connecting**: Use a connection string or separate endpoint and key.  
+- **CRUD Operations**: Use `CreateItemAsync`, `ReadItemAsync`, `UpsertItemAsync`, and `DeleteItemAsync`.  
+
+🔑 **Conventions**:  
+- Each item should include an `ID` and a partition key.  
+- Use `Options` classes to configure properties like consistency levels.
+
+---
+
+### **Server-Side Objects in Cosmos DB**  
+1. **User-Defined Functions (UDFs)**: Custom JavaScript functions for lightweight operations.  
+2. **Stored Procedures**: Handle transactions with ACID guarantees.  
+3. **Triggers**: Pre-triggers validate data, and post-triggers modify or log changes.
+
+---
+
+### **The Cosmos DB Change Feed**  
+The change feed captures inserts and updates but not deletions. Key components include:  
+- **Monitored Container**: Source data for the feed.  
+- **Lease Container**: Tracks feed state and coordinates processing.  
+- **Compute Instance**: Hosts the change feed processor.  
+- **Delegate**: Custom logic for processing data.  
+
+**Use Cases**:  
+- Event-driven applications (e.g., retail, gaming).  
+- Stream processing with tools like Azure Stream Analytics.  
+- ETL workflows with Azure Blob Storage or Data Lake.  
+
+---
+
+### **Review**  
+We’ve covered:  
+1. Cosmos DB infrastructure, including APIs, partitions, and the NoSQL hierarchy.  
+2. Coding patterns for CRUD operations using the C# SDK.  
+3. Server-side objects for advanced use cases.  
+4. The change feed and its implementation for event-driven and ETL scenarios.  
+
+Sure! Here's a summary:
+
+### **Partition Key in Cosmos DB (CustomerID Example)**
+
+- The **partition key** determines how data is logically grouped and physically distributed in Cosmos DB. 
+- Using `CustomerID` as the partition key in a **Transactions container** groups all transactions for a specific customer into the same logical partition.
+
+---
+
+### **Key Benefits:**
+1. **Efficient Queries**  
+   - Fetching all transactions for a customer targets a single partition, improving query performance.
+   - Example:  
+     ```sql
+     SELECT * FROM Transactions WHERE CustomerID = 'C001'
+     ```
+
+2. **Data Locality**  
+   - Data for each customer is stored together, minimizing cross-partition operations.
+
+3. **Scalability**  
+   - Spreads data across partitions for many customers, avoiding performance bottlenecks.
+
+4. **Atomic Transactions**  
+   - Batch operations are possible within a single partition (e.g., adding or updating multiple transactions for the same customer).
+
+---
+
+### **Use Case Example:**
+- **Customer Container**: Partition Key = `CustomerID`
+- **Transactions Container**: Partition Key = `CustomerID`
+
+| **CustomerID** | **TransactionID** | **Amount** | **Date**       |
+|----------------|--------------------|------------|----------------|
+| C001           | T001               | 150.75     | 2025-01-01     |
+| C001           | T002               | 75.50      | 2025-01-05     |
+| C002           | T003               | 300.00     | 2025-01-02     |
+
+---
+
+### **When It’s Ideal**
+- Querying or processing data for a single customer (e.g., `CustomerID = C001`).
+- Performing transactional updates for a customer's data.
+- 
+Visualization
+Customers Container
+Partition Key (CustomerID)	Data
+C001	{ "CustomerID": "C001", "Name": "John Doe", "Email": "john.doe@example.com" }
+C002	{ "CustomerID": "C002", "Name": "Jane Smith", "Email": "jane.smith@example.com" }
+Transactions Container
+Partition Key (CustomerID)	Data
+C001	{ "TransactionID": "T1001", "CustomerID": "C001", "Amount": 150.75 }, { "TransactionID": "T1002", "CustomerID": "C001", "Amount": 75.50 }
+C002	{ "TransactionID": "T2001", "CustomerID": "C002", "Amount": 300.00 }
