@@ -1,290 +1,247 @@
 ---
-title: Azure App Service
+title: Azure App Service Overview
 type: docs
-weight: 2
-next: docs/az204/azureCosmosDb
+weight: 3
+prev: docs/az204/implementContainerServices
+next: docs/az204/azureFunctions
 ---
 
-Azure API Management (APIM) is a fully managed service that allows organizations to publish, secure, transform, monitor, and analyze APIs. It acts as a gateway between clients and backend services, enabling centralized management of APIs while ensuring high availability, security, and scalability.
+##  Azure App Service Overview and Key Concepts
 
----
+#### **Introduction**
+- The Azure App Service is a **Platform as a Service (PaaS)** offering that simplifies building and deploying web apps and APIs without managing the underlying infrastructure.
+- It supports a variety of application types and languages, making it a versatile choice for developers.
 
-### **Core Components of Azure API Management**
-1. **API Gateway**
-   - Handles API requests and responses.
-   - Enforces policies (e.g., rate limiting, authentication).
-   - Routes calls to appropriate backend services.
+#### **Core Features of Azure App Service**
+1. **Multiple Language Support**:
+   - Compatible with languages like **.NET**, **.NET Core**, **Java**, **Ruby**, **Node.js**, **Python**, **PHP**, and more.
+   - The list of supported runtimes is frequently updated, and experimental languages are often available.
 
-2. **Azure Portal**
-   - Provides a management interface for API developers.
-   - Allows configuration of APIs, policies, and monitoring.
+2. **Deployment Options**:
+   - **Manual Methods**: Use **FTP**, Git repos, or cloud drives like **Dropbox** and **OneDrive**.
+   - **Automated CI/CD**: Integrate with **Azure DevOps**, **GitHub Actions**, **Bitbucket**, or local Git repositories.
 
-3. **Developer Portal**
-   - Offers a customizable, self-service platform for API consumers.
-   - Provides API documentation, testing features, and subscription management.
+3. **Built-In DevOps Features**:
+   - Deployment slots for **seamless testing and rollouts**.
+   - **Continuous Integration and Continuous Deployment (CI/CD)** capabilities.
+   - Support for **identity and access management (IAM)** with minimal coding for complex authentication scenarios.
 
-4. **Management API**
-   - REST API for automating API management tasks.
+4. **Global Scale and High Availability**:
+   - Includes **auto-scaling**, **custom domains**, **SSL support**, and **load balancing** (in higher tiers).
 
----
+5. **Diagnostics Logging**:
+   - Application logs can capture **specific runtime issues** for troubleshooting.
+   - Logs can be stored in **Blob Storage** and include **web server diagnostics** and **detailed error messages**.
+   - Temporary logs automatically turn off after 12 hours.
 
-### **Key Features**
-1. **API Abstraction and Management**
-   - Abstracts backend implementation details from consumers.
-   - Supports importing APIs from OpenAPI specifications, WSDL, and other formats.
+#### **Service Plans**
+Azure App Service is structured around **service plans**, which define the scale and resources for hosted apps. Key points include:
 
-2. **Policies**
-   - Define behaviors for APIs such as caching, throttling, logging, transformation, and security.
-   - Examples of policies:
-     - **Rate Limiting**: Restrict the number of API calls per user or subscription.
-     - **CORS (Cross-Origin Resource Sharing)**: Enable or restrict access from specific origins.
-     - **Rewrite URL**: Modify request or response URLs.
-     - **Authentication**: Validate requests using OAuth2, JWT tokens, or API keys.
+1. **Shared Tiers (F1 and D1)**:
+   - Share resources with other tenants.
+   - **No SLA provided**, making these suitable only for testing workloads.
+   - Not available for **Linux-based environments**.
 
-3. **Security**
-   - Supports OAuth2, Azure Active Directory (AAD), API keys, and client certificates.
-   - Allows IP whitelisting/blacklisting.
+2. **Dedicated Tiers (Basic, Standard, Premium)**:
+   - Resources are dedicated to hosted applications.
+   - Offer production SLAs, built-in **load balancing**, and **VNet connectivity**.
+   - Higher tiers support features like **auto-scaling** and **private endpoints** (Premium).
 
-4. **Monitoring and Analytics**
-   - Provides detailed insights into API usage, request performance, and failures.
-   - Can integrate with Azure Monitor and Application Insights for advanced telemetry.
+3. **Isolated Tiers (Isolated and IsolatedV2)**:
+   - Designed for applications needing maximum **performance, security, and isolation**.
+   - Include all features of dedicated tiers and provide **full app isolation**.
 
-5. **Versioning and Revisioning**
-   - **Versioning**: Manage multiple versions of an API (e.g., v1, v2).
-   - **Revisioning**: Make non-breaking changes to an API and maintain a history of revisions.
+#### **Scaling and App Isolation**
+- **Scaling Options**:
+  - **Scale Up**: Increase resources (CPU, memory) for all apps in a plan.
+  - **Scale Out**: Add more instances for load distribution.
+  - **Auto-Scaling**: Configure scaling based on metrics (e.g., CPU usage, traffic) or a time schedule.
 
-6. **Integration with Other Azure Services**
-   - Integrates with Azure Functions, Logic Apps, and Azure Kubernetes Service (AKS).
-   - Can connect with Azure Key Vault for securing credentials and certificates.
+- **App Isolation**:
+  - Place apps in their own plans to scale independently or integrate with resources in different regions.
+  - Useful for apps that consume significant resources or require high performance.
 
----
+#### **Comparison to Other Services**
+- Unlike **Infrastructure as a Service (IaaS)**, which requires full server management, the **PaaS model** of Azure App Service is likened to a **high-quality box mix**—providing ready-to-use tools for faster development with less effort.
+- Focuses on minimizing operational overhead while delivering flexibility and scalability.
 
-### **API Management Tiers**
-1. **Developer**
-   - Cost-effective, for testing and development.
-   - No SLA, limited scale.
-   
-2. **Basic**
-   - Entry-level production use.
-   - Lower scalability.
+#### **Summary of Key Features and Benefits**
+1. Azure App Service supports **virtually any application type**, from **web apps** to **REST APIs**.
+2. Offers **tiered service plans** to meet different business and development needs:
+   - Shared tiers for testing.
+   - Dedicated tiers for production.
+   - Isolated tiers for high-performance and security.
+3. Comprehensive **logging and diagnostics tools** are available in all tiers, including the Free tier.
+4. Simplifies deployment with flexible CI/CD pipelines and manual deployment options.
+5. Built-in **auto-scaling** helps optimize resource usage during peak and off-peak periods.
 
-3. **Standard**
-   - Suitable for medium-scale production workloads.
-   - Higher capacity and regional redundancy.
+## Summary of Azure App Service: Creating and Deploying a Web App  
 
-4. **Premium**
-   - High availability and geo-distributed deployments.
-   - Enterprise-grade features.
+In this segment, the focus is on creating and deploying web apps using Azure App Service, configuring settings, leveraging identity and access management (IAM) options, and integrating deployment slots into DevOps workflows. Below is a detailed breakdown of the content:  
 
----
+#### **Key Steps in Web App Creation**  
+- **Creation Process:**  
+  - Utilize the Azure wizard interface for creating resources, including setting up an App Service Plan if one doesn’t already exist.  
+  - Navigate to the Web App overview page for further configurations after creation.  
 
-### **How to Use API Management**
-1. **Create an API Management Service**
-   - Provision the service in the Azure portal.
-   - Assign a unique domain name and select a pricing tier.
+- **Custom Domains and TLS/SSL Settings:**  
+  - Configure custom URLs via the **Custom Domains** section.  
+  - Add and validate custom domains or purchase them through Azure.  
+  - Manage TLS/SSL certificates (private/public keys) either by uploading existing ones or purchasing directly in Azure.  
 
-2. **Import or Create APIs**
-   - Import from OpenAPI/Swagger, WSDL, or Logic Apps.
-   - Define APIs manually or use existing Azure services like Functions.
+#### **Configuration Options**  
+- **Application Settings:**  
+  - Manage secure settings exposed as environment variables for runtime use.  
+  - Use these settings as an alternative to Azure Key Vault in specific cases.  
+  - Configure secure connection strings, default page names, path mappings, and storage mounts.  
 
-3. **Define Policies**
-   - Use built-in policies for traffic control, security, and transformation.
-   - Write custom policies in XML.
+- **Authentication and IAM:**  
+  - Built-in support for multiple identity providers (e.g., Microsoft, Google).  
+  - Configure identity providers with minimal code through app registration.  
+  - Assign managed identities to web apps for secure resource access without storing credentials.  
 
-4. **Secure APIs**
-   - Apply authentication mechanisms.
-   - Use subscriptions and quotas to control access.
+- **API Management:**  
+  - Manage APIs related to the application directly from the Web App interface.  
 
-5. **Publish APIs**
-   - Use the Developer Portal to expose APIs to consumers.
+#### **Code Deployment and DevOps Integration**  
+- **Deployment Methods:**  
+  - Choose between manual methods (FTP, Git, cloud storage) and automated CI/CD pipelines (Azure DevOps, GitHub Actions).  
 
-6. **Monitor APIs**
-   - Analyze usage and performance using the Azure portal or Application Insights.
+- **Deployment Slots:**  
+  - **Overview:**  
+    - Live apps with separate hostnames used for staging, testing, and deploying updates.  
+    - Available for App Service Plans in the Standard tier or higher.  
+  - **Benefits:**  
+    - Minimize production risk by deploying changes to staging slots for testing before swapping with production.  
+    - Support pre-production testing, with features such as multi-phase swaps for warming up applications and reducing cold starts.  
+  - **Configurations:**  
+    - Set independent configurations for each slot.  
+    - Certain settings (e.g., managed identities, custom domains) are tied to the production slot but can be overridden selectively.  
+  - Deployment slots can be managed through the Azure portal, CLI, or PowerShell.  
 
----
+#### **Review of Covered Features**  
+- **Configuration Highlights:**  
+  - General settings, path mapping, security certificates, and app features in production-level plans.  
+- **IAM Options:**  
+  - Built-in authentication provider setups and managed identity configurations.  
+- **Deployment Features:**  
+  - Manual and automated deployments with an emphasis on deployment slots as a DevOps strategy.
 
-### **Key Concepts for AZ-204 Exam**
-1. **Policy Implementation**
-   - Understand how to apply built-in policies for security, caching, and transformation.
-   - Be familiar with policy XML syntax.
+## Useful Commands
 
-2. **API Import**
-   - Know how to import APIs using OpenAPI, WSDL, or manually configure them.
+Here’s a list of useful Azure CLI commands for managing Azure App Services:
 
-3. **Authentication and Authorization**
-   - Implement OAuth2 and Azure Active Directory authentication.
-   - Understand how to use client certificates and API keys.
-
-4. **Usage Quotas and Rate Limiting**
-   - Implement quotas to restrict API usage per user or subscription.
-
-5. **Versioning**
-   - Differentiate between versioning strategies (e.g., path-based, header-based).
-
-6. **Monitoring and Logging**
-   - Know how to enable monitoring and integrate with Application Insights.
-
-7. **Developer Portal Customization**
-   - Enable and configure the developer portal for API consumers.
-
-8. **Deployment Options**
-   - Understand when to use self-hosted gateways for hybrid and multi-cloud deployments.
-
----
-
-### **Exam Tips**
-- Familiarize yourself with the Azure portal interface for API Management tasks.
-- Practice creating and managing APIs, applying policies, and configuring security.
-- Understand the scenarios for different pricing tiers.
-- Be ready to troubleshoot API calls using diagnostic tools like Application Insights.
-
----
-
-To manage **Azure API Management** using the Azure Command-Line Interface (CLI), you use commands under the `az apim` namespace. Below is a list of helpful CLI commands with descriptions that are commonly used and may be relevant for the AZ-204 exam:
-
----
-
-### **API Management Service Management**
-1. **Create an API Management Service**
+### **General App Service Management**
+1. **Create a Web App**:
    ```bash
-   az apim create --resource-group <ResourceGroupName> --name <APIMName> --location <Location> --publisher-email <Email> --publisher-name <Name>
+   az webapp create --resource-group <ResourceGroupName> --plan <AppServicePlanName> --name <WebAppName> --runtime "<Runtime>"
    ```
-   - Creates a new API Management instance.
-   - Replace placeholders with your resource group, service name, location, and publisher details.
+   Example runtime: `"DOTNETCORE:7.0"` or `"NODE:18-lts"`.
 
-2. **List API Management Services**
+2. **Delete a Web App**:
    ```bash
-   az apim list --resource-group <ResourceGroupName>
+   az webapp delete --resource-group <ResourceGroupName> --name <WebAppName>
    ```
-   - Lists all API Management services in a specific resource group.
 
-3. **Show Details of an API Management Service**
+3. **List Web Apps in a Resource Group**:
    ```bash
-   az apim show --resource-group <ResourceGroupName> --name <APIMName>
+   az webapp list --resource-group <ResourceGroupName> --output table
    ```
-   - Displays details of a specific API Management service.
 
-4. **Delete an API Management Service**
+4. **Show Details of a Web App**:
    ```bash
-   az apim delete --resource-group <ResourceGroupName> --name <APIMName>
+   az webapp show --resource-group <ResourceGroupName> --name <WebAppName>
    ```
-   - Deletes an existing API Management service.
 
----
-
-### **API Management API Operations**
-1. **Import an API**
+### **App Service Plan**
+1. **Create an App Service Plan**:
    ```bash
-   az apim api import --resource-group <ResourceGroupName> --service-name <APIMName> --path <APIPath> --specification-format <Swagger|OpenAPI> --specification-path <FilePath>
+   az appservice plan create --name <PlanName> --resource-group <ResourceGroupName> --sku <Sku> --is-linux
    ```
-   - Imports an API from a file (e.g., Swagger/OpenAPI specification).
+   Example SKU: `B1`, `P1v2`, `S1`.
 
-2. **Create a New API**
+2. **List App Service Plans**:
    ```bash
-   az apim api create --resource-group <ResourceGroupName> --service-name <APIMName> --path <APIPath> --display-name <APIName> --service-url <BackendServiceURL>
+   az appservice plan list --resource-group <ResourceGroupName> --output table
    ```
-   - Manually creates a new API with a specified backend service.
 
-3. **List APIs in a Service**
+3. **Update an App Service Plan**:
    ```bash
-   az apim api list --resource-group <ResourceGroupName> --service-name <APIMName>
+   az appservice plan update --name <PlanName> --resource-group <ResourceGroupName> --sku <NewSku>
    ```
-   - Lists all APIs within a specific API Management service.
 
-4. **Show Details of a Specific API**
+4. **Delete an App Service Plan**:
    ```bash
-   az apim api show --resource-group <ResourceGroupName> --service-name <APIMName> --api-id <APIId>
+   az appservice plan delete --name <PlanName> --resource-group <ResourceGroupName>
    ```
-   - Displays details of a specific API.
 
-5. **Delete an API**
+### **Configuration Management**
+1. **Set App Settings**:
    ```bash
-   az apim api delete --resource-group <ResourceGroupName> --service-name <APIMName> --api-id <APIId>
+   az webapp config appsettings set --resource-group <ResourceGroupName> --name <WebAppName> --settings <Key>=<Value>
    ```
-   - Deletes an API from the service.
 
----
-
-### **Policy Management**
-1. **Set API-Level Policies**
+2. **List App Settings**:
    ```bash
-   az apim api policy set --resource-group <ResourceGroupName> --service-name <APIMName> --api-id <APIId> --xml-content <PolicyFilePath>
+   az webapp config appsettings list --resource-group <ResourceGroupName> --name <WebAppName>
    ```
-   - Applies a policy (in XML format) to an API.
 
-2. **Set Global (All APIs) Policies**
+3. **Set Connection Strings**:
    ```bash
-   az apim policy set --resource-group <ResourceGroupName> --service-name <APIMName> --xml-content <PolicyFilePath>
+   az webapp config connection-string set --resource-group <ResourceGroupName> --name <WebAppName> --settings <ConnectionName>=<Value> --connection-string-type <Type>
    ```
-   - Applies a policy to all APIs within the API Management service.
+   Example types: `SQLAzure`, `MySQL`, `PostgreSQL`.
 
-3. **Show API-Level Policies**
+4. **Enable HTTPS Only**:
    ```bash
-   az apim api policy show --resource-group <ResourceGroupName> --service-name <APIMName> --api-id <APIId>
+   az webapp update --resource-group <ResourceGroupName> --name <WebAppName> --set httpsOnly=true
    ```
-   - Displays the current policies applied to an API.
 
----
-
-### **Subscription Management**
-1. **List Subscriptions**
+### **Deployment and Slots**
+1. **Configure Deployment Source**:
    ```bash
-   az apim subscription list --resource-group <ResourceGroupName> --service-name <APIMName>
+   az webapp deployment source config --name <WebAppName> --resource-group <ResourceGroupName> --repo-url <RepoURL> --branch <BranchName>
    ```
-   - Lists all subscriptions in the API Management service.
 
-2. **Create a Subscription**
+2. **List Deployment Slots**:
    ```bash
-   az apim subscription create --resource-group <ResourceGroupName> --service-name <APIMName> --name <SubscriptionName> --user-id <UserId> --product-id <ProductId>
+   az webapp deployment slot list --resource-group <ResourceGroupName> --name <WebAppName> --output table
    ```
-   - Creates a subscription for a user to access a specific API or product.
 
-3. **Delete a Subscription**
+3. **Create a Deployment Slot**:
    ```bash
-   az apim subscription delete --resource-group <ResourceGroupName> --service-name <APIMName> --subscription-id <SubscriptionId>
+   az webapp deployment slot create --resource-group <ResourceGroupName> --name <WebAppName> --slot <SlotName>
    ```
-   - Deletes a specific subscription.
 
----
-
-### **Diagnostic and Monitoring**
-1. **Enable API Diagnostics**
+4. **Swap Deployment Slots**:
    ```bash
-   az apim api diagnostic create --resource-group <ResourceGroupName> --service-name <APIMName> --api-id <APIId> --name <DiagnosticName> --always-log <allErrors|successes>
+   az webapp deployment slot swap --resource-group <ResourceGroupName> --name <WebAppName> --slot <SlotName> --target-slot <TargetSlot>
    ```
-   - Configures diagnostics for a specific API.
 
-2. **List Diagnostics**
+### **Monitoring and Logs**
+1. **Enable Diagnostic Logs**:
    ```bash
-   az apim api diagnostic list --resource-group <ResourceGroupName> --service-name <APIMName> --api-id <APIId>
+   az webapp log config --name <WebAppName> --resource-group <ResourceGroupName> --web-server-logging filesystem
    ```
-   - Lists all diagnostics configured for an API.
 
----
-
-### **Other Useful Commands**
-1. **Export an API Definition**
+2. **Stream Logs**:
    ```bash
-   az apim api export --resource-group <ResourceGroupName> --service-name <APIMName> --api-id <APIId> --format <Swagger|OpenAPI> --output-folder <FolderPath>
+   az webapp log tail --name <WebAppName> --resource-group <ResourceGroupName>
    ```
-   - Exports the definition of an API in a specified format.
 
-2. **Backup API Management Service**
+3. **Get App Metrics**:
    ```bash
-   az apim backup --resource-group <ResourceGroupName> --name <APIMName> --storage-account-container-uri <StorageContainerSASURI>
+   az monitor metrics list --resource <ResourceID> --metric <MetricName>
    ```
-   - Creates a backup of the API Management service.
+   Example metrics: `CpuTime`, `Http2xx`.
 
-3. **Restore API Management Service**
+### **Scaling**
+1. **Scale App Service Plan**:
    ```bash
-   az apim restore --resource-group <ResourceGroupName> --name <APIMName> --storage-account-container-uri <StorageContainerSASURI>
+   az appservice plan update --name <PlanName> --resource-group <ResourceGroupName> --number-of-workers <InstanceCount>
    ```
-   - Restores the API Management service from a backup.
 
----
-
-### **Tips for AZ-204 Exam**
-- Practice basic operations like creating a service, importing APIs, and applying policies.
-- Understand how to use diagnostics for API monitoring.
-- Be familiar with importing and exporting APIs using CLI and API definitions.
-- Know how to create subscriptions and manage user access via CLI.
+2. **Enable Autoscale**:
+   ```bash
+   az monitor autoscale create --resource-group <ResourceGroupName> --resource <AppServicePlanName> --resource-type "Microsoft.Web/serverFarms" --min-count <MinInstances> --max-count <MaxInstances> --count <DefaultInstances>
+   ```
